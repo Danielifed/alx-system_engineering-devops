@@ -1,6 +1,6 @@
-# This Puppet manifest will install the puppet-flask
+# This Puppet manifest will install the puppet-lint
 
-package { 'puppet-flask':
+package { 'puppet-lint':
   ensure   => '2.1.0',
   provider => 'gem',
 }
