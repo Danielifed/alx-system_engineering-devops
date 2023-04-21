@@ -1,4 +1,4 @@
-# This Puppet manifest will install the puppet-lint
+# This Puppet manifest will install the puppet-flask
 
 package { 'python3-pip':
   ensure => installed,
