@@ -1,0 +1,4 @@
+#!/bin/bash
+#This script will use ssh to connect to the server
+
+ssh -i ~/.ssh/school ubuntu@100.25.19.144

@@ -1,0 +1,4 @@
+#!/bin/bash
+# This script will use ssh-keygen command to create an RSA with 4096 bits
+
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -C "school key" -N "betty"
