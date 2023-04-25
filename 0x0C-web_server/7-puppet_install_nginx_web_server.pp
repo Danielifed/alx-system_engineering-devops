@@ -8,7 +8,7 @@ command => '/usr/bin/sudo /bin/echo Hello World > /var/www/html/index.nginx-debi
 }
 exec {'redirect_page':
 
-command => '/usr/bin/sudo /bin/sed -i "66i rewrite ^/redirect_me https://www.youtube.com/ permanent;" /etc/nginx/sites-available/default',
+command => '/usr/bin/sudo /bin/sed -i "66i rewrite ^/redirect_me https://youtu.be/q5m09rqOoxE permanent;" /etc/nginx/sites-available/default',
 }
 exec {'start_server':
 
