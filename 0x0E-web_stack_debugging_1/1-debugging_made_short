@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# it matters but have be done before
+cp /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
+kill -9 "$(cat /run/nginx.pid)"
