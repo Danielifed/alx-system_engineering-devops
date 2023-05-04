@@ -1,1 +1,1 @@
-This directory will contain all HTTPS SSL files
+This directory will contain ssl files
