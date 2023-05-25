@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    This script uses a REST API, for a given employee ID, returns information about his/her TODO list progress.
+    This script use API, for a given employee ID, returns information about his/her TODO list progress.
 """
 if __name__ == "__main__":
     import requests
