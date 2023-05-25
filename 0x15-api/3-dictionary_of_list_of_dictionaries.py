@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    This script uses a REST API to export dictionary list of dictionaries into JSON.
+    This script uses API to export dictionary list of dictionaries into JSON.
 """
 if __name__ == "__main__":
     import json
