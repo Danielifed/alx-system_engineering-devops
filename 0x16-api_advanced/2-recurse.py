@@ -4,31 +4,26 @@
 """
 import requests
 
+def recurse(subreddit, hot_list=[]):
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
+    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"}
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-def recurse(subreddit, hot_list=[], after="", count=0):
-    link = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {
-        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
-    }
-    parameters = {
-        "after": after,
-        "count": count,
-        "limit": 100
-    }
-    res = requests.get(
-                  link,
-                  headers=headers,
-                  params=parameters,
-                  allow_redirects=False)
-    if res.status_code == 404:
+    if response.status_code == 200:
+        data = response.json()
+        children = data.get("data", {}).get("children", [])
+
+        if children:
+            for child in children:
+                title = child.get("data", {}).get("title")
+                if title:
+                    hot_list.append(title)
+
+            after = data.get("data", {}).get("after")
+            if after:
+                return recurse(subreddit, hot_list=hot_list)
+
+        return hot_list
+
+    else:
         return None
-
-    results = res.json().get("data")
-    after = results.get("after")
-    count += results.get("dist")
-    for kid in results.get("children"):
-        hot_list.append(kid.get("data").get("title"))
-
-    if after is not None:
-        return recurse(subreddit, hot_list, after, count)
-    return hot_list

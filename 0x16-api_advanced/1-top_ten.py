@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-"""
-    Function to print the top ten posts 
-    on a given Reddit subreddit.
-"""
+"""Function to query subscribers on a given Reddit subreddit."""
+import json
 import requests
 
 
@@ -14,10 +12,10 @@ def top_ten(subreddit):
     params = {
         "limit": 10
     }
-    res = requests.get(url, headers=headers, params=params,
+    response = requests.get(url, headers=headers, params=params,
                             allow_redirects=False)
-    if res.status_code == 404:
+    if response.status_code == 404:
         print("None")
         return
-    results = res.json().get("data")
+    results = response.json().get("data")
     [print(c.get("data").get("title")) for c in results.get("children")]
