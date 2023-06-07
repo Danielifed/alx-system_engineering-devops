@@ -1,29 +1,28 @@
 #!/usr/bin/python3
-"""
-    queries a list of all top posts on a given Reddit subreddit
-"""
+'''Get ALL articles for a given subreddit'''
+import pprint
 import requests
 
-def recurse(subreddit, hot_list=[]):
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
-    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"}
-    response = requests.get(url, headers=headers, allow_redirects=False)
+BASE_URL = 'http://reddit.com/r/{}/hot.json'
 
-    if response.status_code == 200:
-        data = response.json()
-        children = data.get("data", {}).get("children", [])
 
-        if children:
-            for child in children:
-                title = child.get("data", {}).get("title")
-                if title:
-                    hot_list.append(title)
-
-            after = data.get("data", {}).get("after")
-            if after:
-                return recurse(subreddit, hot_list=hot_list)
-
-        return hot_list
-
-    else:
+def recurse(subreddit, hot_list=[], after=None):
+    ''' function recurse :Get ALL hot posts'''
+    headers = {'User-agent': 'Unix:0-subs:v1'}
+    params = {'limit': 100}
+    if isinstance(after, str):
+        if after != "STOP":
+            params['after'] = after
+        else:
+            return hot_list
+    response = requests.get(BASE_URL.format(subreddit),
+                            headers=headers, params=params)
+    if response.status_code != 200:
         return None
+    data = response.json().get('data', {})
+    after = data.get('after', 'STOP')
+    if not after:
+        after = "STOP"
+    hot_list = hot_list + [post.get('data', {}).get('title')
+                           for post in data.get('children', [])]
+    return recurse(subreddit, hot_list, after)
